@@ -10,10 +10,6 @@ import { SQLiteProvider } from "../providers/sqlite.provider"
 import { expoDb } from "../database"
 
 import { useColorScheme } from "@/hooks/useColorScheme"
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query"
-import { View } from "react-native"
-
-const queryClient = new QueryClient()
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
@@ -24,10 +20,9 @@ export default function RootLayout() {
 		SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
 	})
 
-	// TODO: fix this, how to use
 	const DrizzleStudio = () => {
 		useDrizzleStudio(expoDb)
-		return <View></View>
+		return null
 	}
 
 	useEffect(() => {
@@ -45,11 +40,10 @@ export default function RootLayout() {
 			{__DEV__ && <DrizzleStudio />}
 			<ThemeProvider value={theme === "dark" ? DarkTheme : DefaultTheme}>
 				<SQLiteProvider>
-					<QueryClientProvider client={queryClient}>
-						<Stack>
-							<Stack.Screen name="index" options={{ headerShown: false }} />
-						</Stack>
-					</QueryClientProvider>
+					<Stack>
+						<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+						<Stack.Screen name="+not-found" />
+					</Stack>
 				</SQLiteProvider>
 			</ThemeProvider>
 		</>

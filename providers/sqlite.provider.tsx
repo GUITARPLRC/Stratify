@@ -5,6 +5,7 @@ import { ActivityIndicator } from "react-native"
 import migrations from "@/drizzle/migrations"
 import { Text, SafeAreaView } from "react-native"
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator"
+import { Colors } from "@/constants/Colors"
 
 export const SQLiteProvider = ({ children }: { children: ReactNode }) => {
 	const { success, error } = useMigrations(db, migrations)
@@ -27,7 +28,7 @@ export const SQLiteProvider = ({ children }: { children: ReactNode }) => {
 
 	return (
 		// is suspense working?
-		<Suspense fallback={<ActivityIndicator color={"#0f0"} />}>
+		<Suspense fallback={<ActivityIndicator color={Colors.primary} />}>
 			<ExpoSQliteProvider databaseName={DATABASE_NAME} useSuspense>
 				{children}
 			</ExpoSQliteProvider>

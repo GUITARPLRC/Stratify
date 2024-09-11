@@ -1,84 +1,60 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "3023d91f-ece9-4021-925b-2a917c3febf5",
+  "id": "9da466c8-1a16-4e12-8af4-7969b3deec29",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "avatarTypes": {
-      "name": "avatarTypes",
+    "list": {
+      "name": "list",
       "columns": {
         "id": {
           "name": "id",
           "type": "text",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": false
-        },
-        "type": {
-          "name": "type",
-          "type": "text(255)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "badgeTypes": {
-      "name": "badgeTypes",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "type": {
-          "name": "type",
-          "type": "text(255)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "badges": {
-      "name": "badges",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "name": {
-          "name": "name",
-          "type": "text(255)",
-          "primaryKey": false,
-          "notNull": false,
           "autoincrement": false
         },
         "userId": {
           "name": "userId",
           "type": "text",
           "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
-        "badgeTypeId": {
-          "name": "badgeTypeId",
+        "color": {
+          "name": "color",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "icon": {
+          "name": "icon",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "isFavorite": {
+          "name": "isFavorite",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
+          "default": false
+        },
+        "sortKey": {
+          "name": "sortKey",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
           "autoincrement": false
         },
         "created_at": {
@@ -92,25 +68,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "badges_userId_user_id_fk": {
-          "name": "badges_userId_user_id_fk",
-          "tableFrom": "badges",
+        "list_userId_user_id_fk": {
+          "name": "list_userId_user_id_fk",
+          "tableFrom": "list",
           "tableTo": "user",
           "columnsFrom": [
             "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "badges_badgeTypeId_badgeTypes_id_fk": {
-          "name": "badges_badgeTypeId_badgeTypes_id_fk",
-          "tableFrom": "badges",
-          "tableTo": "badgeTypes",
-          "columnsFrom": [
-            "badgeTypeId"
           ],
           "columnsTo": [
             "id"
@@ -122,8 +85,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "listItems": {
-      "name": "listItems",
+    "listItem": {
+      "name": "listItem",
       "columns": {
         "id": {
           "name": "id",
@@ -139,9 +102,23 @@
           "notNull": false,
           "autoincrement": false
         },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "subtitle": {
+          "name": "subtitle",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "description": {
           "name": "description",
-          "type": "text(255)",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -164,85 +141,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "listItems_listId_lists_id_fk": {
-          "name": "listItems_listId_lists_id_fk",
-          "tableFrom": "listItems",
-          "tableTo": "lists",
+        "listItem_listId_list_id_fk": {
+          "name": "listItem_listId_list_id_fk",
+          "tableFrom": "listItem",
+          "tableTo": "list",
           "columnsFrom": [
             "listId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "lists": {
-      "name": "lists",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "userId": {
-          "name": "userId",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "title": {
-          "name": "title",
-          "type": "text(255)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "description": {
-          "name": "description",
-          "type": "text(255)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "sortKey": {
-          "name": "sortKey",
-          "type": "text(255)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "theme": {
-          "name": "theme",
-          "type": "text(255)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(current_timestamp)"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "lists_userId_user_id_fk": {
-          "name": "lists_userId_user_id_fk",
-          "tableFrom": "lists",
-          "tableTo": "user",
-          "columnsFrom": [
-            "userId"
           ],
           "columnsTo": [
             "id"
@@ -266,35 +170,21 @@
         },
         "name": {
           "name": "name",
-          "type": "text(255)",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "email": {
           "name": "email",
-          "type": "text(255)",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "password": {
           "name": "password",
-          "type": "text(255)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "avatar": {
-          "name": "avatar",
-          "type": "text(255)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "avatarTypeId": {
-          "name": "avatarTypeId",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -304,25 +194,20 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "autoincrement": false,
+          "default": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(current_timestamp)"
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "user_avatarTypeId_avatarTypes_id_fk": {
-          "name": "user_avatarTypeId_avatarTypes_id_fk",
-          "tableFrom": "user",
-          "tableTo": "avatarTypes",
-          "columnsFrom": [
-            "avatarTypeId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }

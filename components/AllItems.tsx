@@ -6,8 +6,6 @@ import IterableItem from "./IterableItem"
 import { eq, asc } from "drizzle-orm"
 
 const AllItems = ({ list, searchValue }: { list: schema.List; searchValue: string }) => {
-	console.log({ list })
-	console.log("render")
 	const { data } = useLiveQuery(
 		db
 			.select()

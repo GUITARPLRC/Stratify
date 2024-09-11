@@ -6,6 +6,7 @@ import AllLists from "@/components/AllLists"
 import { ThemedView } from "@/components/ThemedView"
 import AddButton from "@/components/AddButton"
 import SearchInput from "@/components/SearchInput"
+import { KeyboardAvoidingView } from "react-native"
 
 export default function Index() {
 	const [value, onValueChange] = useState("")
@@ -21,13 +22,15 @@ export default function Index() {
 	}, [])
 
 	return (
-		<ThemedView style={{ flex: 1 }}>
-			<View style={styles.inputContainer}>
-				<SearchInput value={value} onChange={onValueChange} />
-			</View>
-			<AllLists />
-			<AddButton addType="List" />
-		</ThemedView>
+		<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={80}>
+			<ThemedView style={{ flex: 1 }}>
+				<View style={styles.inputContainer}>
+					<SearchInput value={value} onChange={onValueChange} />
+				</View>
+				<AllLists searchValue={value} />
+				<AddButton addType="List" />
+			</ThemedView>
+		</KeyboardAvoidingView>
 	)
 }
 

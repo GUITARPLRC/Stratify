@@ -15,7 +15,7 @@ export type List = {
 	id: string
 	userId: string
 	title: string | null
-	sortKey: string | null
+	sortKey: string
 	isFavorite: boolean | null
 	createdAt: string
 	color: string | null
@@ -58,7 +58,7 @@ export const list = sqliteTable("list", {
 	isFavorite: integer("isFavorite", { mode: "boolean" }).default(false),
 	sortKey: text("sortKey")
 		.notNull()
-		.$defaultFn(() => "title"),
+		.$defaultFn(() => "createdAt"),
 	createdAt: text("created_at")
 		.notNull()
 		.default(sql`(current_timestamp)`),

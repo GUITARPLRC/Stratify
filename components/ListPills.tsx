@@ -11,9 +11,10 @@ import { useMemo } from "react"
 
 const ListPills = ({ list }: { list: List }) => {
 	const listPillOptions = {
-		0: "title",
-		1: "rating",
-		2: "subtitle",
+		all: "createdAt",
+		title: "title",
+		rating: "priority",
+		subtitle: "subtitle",
 	}
 
 	const updateListSort = async (key: string) => {
@@ -28,18 +29,18 @@ const ListPills = ({ list }: { list: List }) => {
 	return (
 		<View style={styles.container}>
 			<PillList>
-				{Object.values(listPillOptions).map((key) => {
+				{Object.keys(listPillOptions).map((key) => {
 					const color =
 						["yellow", "green", ""].indexOf(list?.color) > -1
 							? Colors.accentColors.black
 							: Colors.text
-					const selected = key === list?.sortKey
+					const selected = listPillOptions[key] === list?.sortKey
 					return (
 						<View key={key} style={styles.pillContainer}>
 							<Pill
 								selected={selected}
 								selectedColor={selectedColor}
-								onPress={() => updateListSort(key)}
+								onPress={() => updateListSort(listPillOptions[key])}
 								listPill
 							>
 								<ThemedText style={{ color: selected ? color : Colors.text, fontSize: 16 }}>

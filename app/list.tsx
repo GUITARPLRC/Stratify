@@ -3,7 +3,7 @@ import SearchInput from "@/components/SearchInput"
 import { ThemedView } from "@/components/ThemedView"
 import { List } from "@/database/schema"
 import { useRoute } from "@react-navigation/native"
-import { View, StyleSheet, Pressable } from "react-native"
+import { View, StyleSheet, Pressable, KeyboardAvoidingView } from "react-native"
 import AllItems from "@/components/AllItems"
 import AddButton from "@/components/AddButton"
 import { useFocusEffect, useNavigation } from "expo-router"
@@ -39,16 +39,16 @@ export default function ListView() {
 	)
 
 	return (
-		<ThemedView style={{ flex: 1 }}>
-			<View style={styles.inputContainer}>
-				<SearchInput value={searchValue} onChange={onChangeSearchValue} />
-			</View>
-			<View>
-				<ListPills list={list[0]} />
-			</View>
-			<AllItems list={list[0]} />
-			<AddButton addType="Item" list={item} />
-		</ThemedView>
+		<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={80}>
+			<ThemedView style={{ flex: 1 }}>
+				<View style={styles.inputContainer}>
+					<SearchInput value={searchValue} onChange={onChangeSearchValue} />
+				</View>
+				<View>{list.length > 0 && <ListPills list={list[0]} />}</View>
+				{list.length > 0 && <AllItems list={list[0]} searchValue={searchValue} />}
+				<AddButton addType="Item" list={item} />
+			</ThemedView>
+		</KeyboardAvoidingView>
 	)
 }
 

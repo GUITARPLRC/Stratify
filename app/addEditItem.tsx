@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View } from "react-native"
+import { KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, View } from "react-native"
 import { ThemedText } from "@/components/ThemedText"
 import { ThemedView } from "@/components/ThemedView"
 import { useRoute } from "@react-navigation/native"
@@ -44,6 +44,7 @@ export default function AddEditItem() {
 				title: itemTitle,
 				subtitle: itemSubtitle,
 				description: itemDescription,
+				priority: priority ? Number(priority) : null,
 			})
 			.where(eq(schema.listItem.id, item.id))
 	}
@@ -52,75 +53,79 @@ export default function AddEditItem() {
 		return db.delete(schema.listItem).where(eq(schema.listItem.id, item.id))
 	}
 
-	const [priority, setPriority] = useState("")
+	const [priority, setPriority] = useState(item?.priority || 0)
 
 	return (
-		<ThemedView
-			style={{
-				flex: 1,
-			}}
-		>
-			<View>
-				<View>
-					<ThemedText style={styles.inputLabel}>Title</ThemedText>
-					<View style={styles.inputContainer}>
-						<Input value={itemTitle} onChangeText={setItemTitle} />
-					</View>
-				</View>
-				<View>
-					<ThemedText style={styles.inputLabel}>Subtitle</ThemedText>
-					<View style={styles.inputContainer}>
-						<Input value={itemSubtitle} onChangeText={setItemSubtitle} />
-					</View>
-				</View>
-				<View>
-					<ThemedText style={styles.inputLabel}>Description</ThemedText>
-					<View style={styles.inputContainer}>
-						<Input value={itemDescription} onChangeText={setItemDescription} />
-					</View>
-				</View>
-				<View>
-					<ThemedText style={[styles.inputLabel, { marginBottom: -30 }]}>Priority</ThemedText>
-					<View style={[styles.inputContainer, { alignItems: "center" }]}>
-						<Picker
-							selectedValue={priority || "0"}
-							onValueChange={setPriority}
-							style={{ width: "100%" }}
-						>
-							{["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].map((item) => (
-								<Picker.Item key={item} label={item} value={item} color="#fff" />
-							))}
-						</Picker>
-					</View>
-				</View>
-			</View>
-			<View style={styles.buttonContainer}>
-				<View style={styles.deleteButtonContainer}>
-					<Pressable
-						style={styles.deleteButton}
-						onPress={async () => {
-							await deleteItem()
-							navigation.goBack()
-						}}
-					>
-						<ThemedText>Delete</ThemedText>
-					</Pressable>
-				</View>
-				<AddEditButton
-					type={title.includes("Edit") ? "Update" : "Create"}
-					onPress={async () => {
-						if (title.includes("Edit")) {
-							// edit / update
-							await editItem()
-						} else {
-							// create
-							await createItem()
-						}
-						navigation.goBack()
+		<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={80}>
+			<ScrollView>
+				<ThemedView
+					style={{
+						flex: 1,
 					}}
-				/>
-			</View>
-		</ThemedView>
+				>
+					<View>
+						<View>
+							<ThemedText style={styles.inputLabel}>Title</ThemedText>
+							<View style={styles.inputContainer}>
+								<Input value={itemTitle} onChangeText={setItemTitle} />
+							</View>
+						</View>
+						<View>
+							<ThemedText style={styles.inputLabel}>Subtitle</ThemedText>
+							<View style={styles.inputContainer}>
+								<Input value={itemSubtitle} onChangeText={setItemSubtitle} />
+							</View>
+						</View>
+						<View>
+							<ThemedText style={styles.inputLabel}>Description</ThemedText>
+							<View style={styles.inputContainer}>
+								<Input value={itemDescription} onChangeText={setItemDescription} />
+							</View>
+						</View>
+						<View>
+							<ThemedText style={[styles.inputLabel, { marginBottom: -30 }]}>Priority</ThemedText>
+							<View style={[styles.inputContainer, { alignItems: "center" }]}>
+								<Picker
+									selectedValue={priority}
+									onValueChange={setPriority}
+									style={{ width: "100%" }}
+								>
+									{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
+										<Picker.Item key={item} label={item.toString()} value={item} color="#fff" />
+									))}
+								</Picker>
+							</View>
+						</View>
+					</View>
+					<View style={styles.buttonContainer}>
+						<View style={styles.deleteButtonContainer}>
+							<Pressable
+								style={styles.deleteButton}
+								onPress={async () => {
+									await deleteItem()
+									navigation.goBack()
+								}}
+							>
+								<ThemedText>Delete</ThemedText>
+							</Pressable>
+						</View>
+						<AddEditButton
+							type={title.includes("Edit") ? "Update" : "Create"}
+							onPress={async () => {
+								if (title.includes("Edit")) {
+									// edit / update
+									await editItem()
+								} else {
+									// create
+									await createItem()
+								}
+								navigation.goBack()
+							}}
+						/>
+					</View>
+				</ThemedView>
+			</ScrollView>
+		</KeyboardAvoidingView>
 	)
 }
 

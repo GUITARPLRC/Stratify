@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View } from "react-native"
+import { KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, View } from "react-native"
 import { ThemedText } from "@/components/ThemedText"
 import { ThemedView } from "@/components/ThemedView"
 import { useRoute } from "@react-navigation/native"
@@ -89,66 +89,70 @@ export default function AddEditList() {
 	]
 
 	return (
-		<ThemedView
-			style={{
-				flex: 1,
-			}}
-		>
-			<View>
-				<View>
-					<ThemedText style={styles.inputLabel}>Title</ThemedText>
-					<View style={styles.inputContainer}>
-						<Input value={itemTitle} onChangeText={setItemTitle} />
-					</View>
-				</View>
-				<View style={styles.inputContainer}>
-					<ThemedText style={styles.inputLabel}>Icon</ThemedText>
-					<View style={styles.rowContainer}>
-						<ItemIconColorSelect
-							items={icons}
-							onPress={setSelectedIcon}
-							selectedKey={selectedIcon}
-						/>
-					</View>
-				</View>
-				<View style={styles.inputContainer}>
-					<ThemedText style={styles.inputLabel}>Color</ThemedText>
-					<View style={styles.rowContainer}>
-						<ItemIconColorSelect
-							items={colors}
-							onPress={setSelectedColor}
-							selectedKey={selectedColor}
-						/>
-					</View>
-				</View>
-			</View>
-			<View style={styles.buttonContainer}>
-				<View style={styles.deleteButtonContainer}>
-					<Pressable
-						style={styles.deleteButton}
-						onPress={async () => {
-							await deleteList()
-							navigation.navigate("index")
-						}}
-					>
-						<ThemedText>Delete</ThemedText>
-					</Pressable>
-				</View>
-				<AddEditButton
-					type={title.includes("Edit") ? "Update" : "Create"}
-					onPress={async () => {
-						if (title.includes("Edit")) {
-							// edit / update
-							await editList()
-						} else {
-							// create
-							await createList()
-						}
-						navigation.goBack()
+		<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={80}>
+			<ScrollView>
+				<ThemedView
+					style={{
+						flex: 1,
 					}}
-				/>
-			</View>
-		</ThemedView>
+				>
+					<View>
+						<View>
+							<ThemedText style={styles.inputLabel}>Title</ThemedText>
+							<View style={styles.inputContainer}>
+								<Input value={itemTitle} onChangeText={setItemTitle} />
+							</View>
+						</View>
+						<View style={styles.inputContainer}>
+							<ThemedText style={styles.inputLabel}>Icon</ThemedText>
+							<View style={styles.rowContainer}>
+								<ItemIconColorSelect
+									items={icons}
+									onPress={setSelectedIcon}
+									selectedKey={selectedIcon}
+								/>
+							</View>
+						</View>
+						<View style={styles.inputContainer}>
+							<ThemedText style={styles.inputLabel}>Color</ThemedText>
+							<View style={styles.rowContainer}>
+								<ItemIconColorSelect
+									items={colors}
+									onPress={setSelectedColor}
+									selectedKey={selectedColor}
+								/>
+							</View>
+						</View>
+					</View>
+					<View style={styles.buttonContainer}>
+						<View style={styles.deleteButtonContainer}>
+							<Pressable
+								style={styles.deleteButton}
+								onPress={async () => {
+									await deleteList()
+									navigation.navigate("index")
+								}}
+							>
+								<ThemedText>Delete</ThemedText>
+							</Pressable>
+						</View>
+						<AddEditButton
+							type={title.includes("Edit") ? "Update" : "Create"}
+							onPress={async () => {
+								if (title.includes("Edit")) {
+									// edit / update
+									await editList()
+								} else {
+									// create
+									await createList()
+								}
+								navigation.goBack()
+							}}
+						/>
+					</View>
+				</ThemedView>
+			</ScrollView>
+		</KeyboardAvoidingView>
 	)
 }
 

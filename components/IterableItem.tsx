@@ -28,7 +28,7 @@ const IterableItem = ({
 	const handleIcon = useMemo(() => {
 		// extract this to a separate util being used in List pills
 		const iconColor =
-			color && ["yellow", "green", ""].indexOf(color) > -1 ? Colors.accentColors.black : Colors.text
+			["yellow", "green", ""].indexOf(color) > -1 ? Colors.accentColors.black : Colors.text
 		const homePillIcons = {
 			list: <ClipboardList size={24} color={iconColor} />,
 			food: <Apple size={24} color={iconColor} />,
@@ -37,7 +37,7 @@ const IterableItem = ({
 			folder: <Folder size={24} color={iconColor} />,
 		}
 		return homePillIcons[item.icon] || <View></View>
-	}, [item])
+	}, [item, color])
 
 	const navigate = () => {
 		itemType === "list"
@@ -49,10 +49,7 @@ const IterableItem = ({
 	}
 
 	const textColor = useMemo(
-		() =>
-			color && ["yellow", "green", ""].indexOf(color) > -1
-				? Colors.accentColors.black
-				: Colors.text,
+		() => (["yellow", "green", ""].indexOf(color) > -1 ? Colors.accentColors.black : Colors.text),
 		[color],
 	)
 

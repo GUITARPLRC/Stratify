@@ -1,12 +1,18 @@
 import { Colors } from "@/constants/Colors"
 import { View, StyleSheet, TextInput } from "react-native"
 import { Search } from "lucide-react-native"
+import { useRef } from "react"
 
 const SearchInput = ({ value, onChange }: { value: string; onChange: (val: string) => void }) => {
+	const inputRef = useRef<TextInput>(null)
 	return (
-		<View style={styles.container}>
+		<View
+			style={styles.container}
+			onTouchStart={() => inputRef.current && inputRef.current.focus()}
+		>
 			<Search size={22} color={Colors.accentColors.black} />
 			<TextInput
+				ref={inputRef}
 				style={styles.input}
 				placeholder="Search"
 				placeholderTextColor={Colors.accentColors.black}
@@ -30,6 +36,7 @@ const styles = StyleSheet.create({
 		fontSize: 17,
 		fontFamily: "Montserrat",
 		marginLeft: 10,
+		flex: 1,
 	},
 })
 

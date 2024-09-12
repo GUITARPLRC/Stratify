@@ -22,13 +22,8 @@ export default function Welcome() {
 					<ThemedText style={{ fontSize: 20 }}>Let's Go</ThemedText>
 				</Pressable>
 			</View>
-			<ConfettiCannon
-				count={200}
-				origin={{ x: -200, y: 0 }}
-				fadeOut
-				autoStartDelay={1000}
-				autoStart
-			/>
+
+			<ConfettiCannon count={100} origin={{ x: -200, y: 0 }} fadeOut autoStart />
 		</ThemedView>
 	)
 }

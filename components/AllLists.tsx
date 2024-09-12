@@ -12,9 +12,6 @@ const AllLists = ({ searchValue }: { searchValue: string }) => {
 		() => (searchValue ? data.filter((list: List) => list.title.includes(searchValue)) : data),
 		[data, searchValue],
 	)
-	console.log({ searchValue })
-	console.log({ data })
-	console.log({ filteredData })
 	return (
 		<ScrollView>
 			{filteredData.map((list: List) => (

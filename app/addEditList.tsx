@@ -7,11 +7,19 @@ import Input from "@/components/Input"
 import { useState } from "react"
 import AddEditButton from "@/components/AddEditButton"
 import { Colors } from "@/constants/Colors"
-import { Apple, ClipboardList, Folder, Plane, ShoppingCart, Trash } from "lucide-react-native"
+import {
+	Apple,
+	ClipboardList,
+	Folder,
+	Plane,
+	ShoppingCart,
+	Trash2 as Trash,
+} from "lucide-react-native"
 import ItemIconColorSelect from "@/components/ItemIconColorSelect"
 import { db } from "@/database"
 import * as schema from "@/database/schema"
 import { eq } from "drizzle-orm"
+import { hasAction, requestReview } from "expo-store-review"
 
 export default function AddEditList() {
 	const { params } = useRoute()
@@ -37,7 +45,18 @@ export default function AddEditList() {
 	})
 
 	const createList = async () => {
+		// check if second list and if user has submitted review
+		// if so, request
+		const listData = await db.select().from(schema.list)
 		const userData = await db.select().from(schema.user)
+		if (listData.length >= 1 && !userData[0].hasSubmittedReview && (await hasAction())) {
+			requestReview()
+			await db
+				.update(schema.user)
+				.set({ hasSubmittedReview: true })
+				.where(eq(schema.user.id, userData[0].id))
+		}
+
 		return db.insert(schema.list).values({
 			title: itemTitle,
 			color: selectedColor,

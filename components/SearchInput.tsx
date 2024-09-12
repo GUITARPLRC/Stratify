@@ -1,6 +1,6 @@
 import { Colors } from "@/constants/Colors"
-import { View, StyleSheet, TextInput } from "react-native"
-import { Search } from "lucide-react-native"
+import { View, StyleSheet, TextInput, Pressable } from "react-native"
+import { Cross, Search, X } from "lucide-react-native"
 import { useRef } from "react"
 
 const SearchInput = ({ value, onChange }: { value: string; onChange: (val: string) => void }) => {
@@ -19,6 +19,12 @@ const SearchInput = ({ value, onChange }: { value: string; onChange: (val: strin
 				value={value}
 				onChangeText={onChange}
 			/>
+			{/* Clear Search */}
+			{value && (
+				<Pressable onPress={() => onChange("")}>
+					<X size={22} color={Colors.accentColors.black} />
+				</Pressable>
+			)}
 		</View>
 	)
 }

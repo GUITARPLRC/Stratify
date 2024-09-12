@@ -78,6 +78,14 @@ export default function RootLayout() {
 							}}
 						/>
 						<Stack.Screen
+							name="welcome"
+							options={{
+								title: "",
+								headerBackVisible: false,
+								animation: "none",
+							}}
+						/>
+						<Stack.Screen
 							name="list"
 							options={{
 								title: "My List",

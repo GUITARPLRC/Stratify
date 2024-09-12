@@ -10,7 +10,7 @@ import AddEditButton from "@/components/AddEditButton"
 import { db } from "@/database"
 import * as schema from "@/database/schema"
 import { eq } from "drizzle-orm"
-import { Trash } from "lucide-react-native"
+import { Trash2 as Trash } from "lucide-react-native"
 import { Colors } from "react-native/Libraries/NewAppScreen"
 
 export default function AddEditItem() {

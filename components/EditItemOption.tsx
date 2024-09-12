@@ -16,6 +16,7 @@ export default function EditItemOption({
 				styles.rowCircle,
 				{
 					borderWidth: 2,
+					// * Nugget: borderColor needs transparent option for color to change
 					borderColor: isSelected ? Colors.primary : "transparent",
 				},
 			]}

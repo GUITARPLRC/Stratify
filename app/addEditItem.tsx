@@ -10,6 +10,8 @@ import AddEditButton from "@/components/AddEditButton"
 import { db } from "@/database"
 import * as schema from "@/database/schema"
 import { eq } from "drizzle-orm"
+import { Trash } from "lucide-react-native"
+import { Colors } from "react-native/Libraries/NewAppScreen"
 
 export default function AddEditItem() {
 	const { params } = useRoute()
@@ -18,6 +20,7 @@ export default function AddEditItem() {
 		item: schema.ListItem
 		list: schema.List
 	}
+	const isEdit = title.includes("Edit")
 	const [itemTitle, setItemTitle] = useState(item?.title || "")
 	const [itemSubtitle, setItemSubtitle] = useState(item?.subtitle || "")
 	const [itemDescription, setItemDescription] = useState(item?.description || "")
@@ -25,6 +28,17 @@ export default function AddEditItem() {
 	useFocusEffect(() => {
 		navigation.setOptions({
 			title,
+			headerRight: () =>
+				isEdit ? (
+					<Pressable
+						onPress={async () => {
+							await deleteItem()
+							navigation.goBack()
+						}}
+					>
+						<Trash size={18} color={Colors.text} />
+					</Pressable>
+				) : null,
 		})
 	})
 
@@ -98,17 +112,6 @@ export default function AddEditItem() {
 						</View>
 					</View>
 					<View style={styles.buttonContainer}>
-						<View style={styles.deleteButtonContainer}>
-							<Pressable
-								style={styles.deleteButton}
-								onPress={async () => {
-									await deleteItem()
-									navigation.goBack()
-								}}
-							>
-								<ThemedText>Delete</ThemedText>
-							</Pressable>
-						</View>
 						<AddEditButton
 							type={title.includes("Edit") ? "Update" : "Create"}
 							onPress={async () => {
@@ -134,13 +137,6 @@ const styles = StyleSheet.create({
 		justifyContent: "flex-end",
 		flex: 1,
 		marginBottom: 30,
-	},
-	deleteButtonContainer: {
-		alignItems: "center",
-		marginBottom: 16,
-	},
-	deleteButton: {
-		padding: 8,
 	},
 	inputLabel: {
 		fontSize: 20,

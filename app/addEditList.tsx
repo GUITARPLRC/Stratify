@@ -4,11 +4,10 @@ import { ThemedView } from "@/components/ThemedView"
 import { useRoute } from "@react-navigation/native"
 import { useFocusEffect, useNavigation } from "expo-router"
 import Input from "@/components/Input"
-import { Picker } from "@react-native-picker/picker"
 import { useState } from "react"
 import AddEditButton from "@/components/AddEditButton"
 import { Colors } from "@/constants/Colors"
-import { Apple, ClipboardList, Folder, Plane, ShoppingCart } from "lucide-react-native"
+import { Apple, ClipboardList, Folder, Plane, ShoppingCart, Trash } from "lucide-react-native"
 import ItemIconColorSelect from "@/components/ItemIconColorSelect"
 import { db } from "@/database"
 import * as schema from "@/database/schema"
@@ -17,11 +16,23 @@ import { eq } from "drizzle-orm"
 export default function AddEditList() {
 	const { params } = useRoute()
 	const { title, item } = params as { title: string; item: schema.List }
+	const isEdit = title.includes("Edit")
 	const [itemTitle, setItemTitle] = useState(item?.title || "")
 	const navigation = useNavigation()
 	useFocusEffect(() => {
 		navigation.setOptions({
 			title,
+			headerRight: () =>
+				isEdit ? (
+					<Pressable
+						onPress={async () => {
+							await deleteList()
+							navigation.navigate("index")
+						}}
+					>
+						<Trash size={18} color={Colors.text} />
+					</Pressable>
+				) : null,
 		})
 	})
 
@@ -49,8 +60,6 @@ export default function AddEditList() {
 	const deleteList = async () => {
 		return db.delete(schema.list).where(eq(schema.list.id, item.id))
 	}
-
-	const [priority, setPriority] = useState("")
 
 	const [selectedIcon, setSelectedIcon] = useState(item?.icon || "")
 	const icons = [
@@ -90,13 +99,13 @@ export default function AddEditList() {
 
 	return (
 		<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={80}>
-			<ScrollView>
+			<ScrollView contentContainerStyle={{ flex: 1 }}>
 				<ThemedView
 					style={{
 						flex: 1,
 					}}
 				>
-					<View>
+					<View style={{ flex: 1 }}>
 						<View>
 							<ThemedText style={styles.inputLabel}>Title</ThemedText>
 							<View style={styles.inputContainer}>
@@ -125,21 +134,10 @@ export default function AddEditList() {
 						</View>
 					</View>
 					<View style={styles.buttonContainer}>
-						<View style={styles.deleteButtonContainer}>
-							<Pressable
-								style={styles.deleteButton}
-								onPress={async () => {
-									await deleteList()
-									navigation.navigate("index")
-								}}
-							>
-								<ThemedText>Delete</ThemedText>
-							</Pressable>
-						</View>
 						<AddEditButton
-							type={title.includes("Edit") ? "Update" : "Create"}
+							type={isEdit ? "Update" : "Create"}
 							onPress={async () => {
-								if (title.includes("Edit")) {
+								if (isEdit) {
 									// edit / update
 									await editList()
 								} else {
@@ -159,20 +157,12 @@ export default function AddEditList() {
 const styles = StyleSheet.create({
 	buttonContainer: {
 		justifyContent: "flex-end",
-		flex: 1,
 		marginBottom: 30,
 	},
 	colorCircle: {
 		width: 24,
 		height: 24,
 		borderRadius: 12,
-	},
-	deleteButtonContainer: {
-		alignItems: "center",
-		marginBottom: 16,
-	},
-	deleteButton: {
-		padding: 8,
 	},
 	inputLabel: {
 		fontSize: 20,

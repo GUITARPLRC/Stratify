@@ -16,7 +16,7 @@ export default function EditItemOption({
 				styles.rowCircle,
 				{
 					borderWidth: 2,
-					borderColor: isSelected ? Colors.primary : "",
+					borderColor: isSelected ? Colors.primary : "transparent",
 				},
 			]}
 			onPress={() => onPress && onPress(item.key)}

@@ -10,19 +10,19 @@ const SearchInput = ({ value, onChange }: { value: string; onChange: (val: strin
 			style={styles.container}
 			onTouchStart={() => inputRef.current && inputRef.current.focus()}
 		>
-			<Search size={22} color={Colors.accentColors.black} />
+			<Search size={22} color={Colors.black} />
 			<TextInput
 				ref={inputRef}
 				style={styles.input}
 				placeholder="Search"
-				placeholderTextColor={Colors.accentColors.black}
+				placeholderTextColor={Colors.black}
 				value={value}
 				onChangeText={onChange}
 			/>
 			{/* Clear Search */}
 			{value && (
 				<Pressable onPress={() => onChange("")}>
-					<X size={22} color={Colors.accentColors.black} />
+					<X size={22} color={Colors.black} />
 				</Pressable>
 			)}
 		</View>
@@ -30,7 +30,7 @@ const SearchInput = ({ value, onChange }: { value: string; onChange: (val: strin
 }
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: Colors.accentColors.grey,
+		backgroundColor: Colors.grey,
 		borderRadius: 20,
 		flexDirection: "row",
 		alignItems: "center",
@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
 		paddingVertical: 8,
 	},
 	input: {
-		color: Colors.accentColors.black,
-		fontSize: 17,
+		color: Colors.black,
+		fontSize: 20,
 		fontFamily: "Montserrat",
 		marginLeft: 10,
 		flex: 1,

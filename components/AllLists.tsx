@@ -7,9 +7,12 @@ import ListIterableItem from "./ListIterableItem"
 import { useMemo } from "react"
 
 const AllLists = ({ searchValue }: { searchValue: string }) => {
-	const { data } = useLiveQuery(db.select().from(Schema.list))
+	const { data }: { data: Schema.List[] } = useLiveQuery(db.select().from(Schema.list))
 	const filteredData = useMemo(
-		() => (searchValue ? data.filter((list: List) => list.title.includes(searchValue)) : data),
+		() =>
+			searchValue
+				? data.filter((list: List) => list.title && list.title.includes(searchValue))
+				: data,
 		[data, searchValue],
 	)
 	return (

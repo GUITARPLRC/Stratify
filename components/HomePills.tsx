@@ -4,6 +4,12 @@ import PillList from "./PillList"
 import { ThemedText } from "./ThemedText"
 import { Apple, ClipboardList, Folder, Plane, ShoppingCart, Star } from "lucide-react-native"
 
+// * WIP 🚧
+
+// TODO: iterate on displaying pills per section
+// TODO: iterate on selected sort option, currently only "all" is selected
+// TODO: create PillContent component to pass props
+
 const homePillOptions = {
 	0: "all",
 	1: "favorite",
@@ -25,22 +31,7 @@ const homePillIcons = {
 	folder: <Folder size={24} color="#000" />,
 }
 
-// TODO: iterate on displaying pills per section
-// TODO: iterate on selected sort option, currently only "all" is selected
-// TODO: create PillContent component to pass props
-
 const HomePills = () => {
-	// const createPillContent = useMemo(() => {
-	// 	return (
-	// 		<Pill selected={homePillOptions[key] === "all"}>
-	// 			{homePillOptions[key] === "all" ? (
-	// 				<ThemedText>All</ThemedText>
-	// 			) : (
-	// 				homePillIcons[homePillOptions[key]]
-	// 			)}
-	// 		</Pill>
-	// 	)
-	// }, [])
 	return (
 		<View style={styles.container}>
 			<PillList>
@@ -48,7 +39,7 @@ const HomePills = () => {
 					<View key={key} style={styles.pillContainer}>
 						<Pill selected={homePillOptions[key] === "all"}>
 							{homePillOptions[key] === "all" ? (
-								<ThemedText style={{ fontSize: 16 }}>All</ThemedText>
+								<ThemedText type="medium">All</ThemedText>
 							) : (
 								homePillIcons[homePillOptions[key]]
 							)}

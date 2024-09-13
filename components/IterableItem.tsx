@@ -2,17 +2,10 @@ import { View, StyleSheet, Pressable } from "react-native"
 import { List, ListItem } from "@/database/schema"
 import { Colors } from "@/constants/Colors"
 import { ThemedText } from "./ThemedText"
-import {
-	Apple,
-	ChevronRight,
-	ClipboardList,
-	Folder,
-	Plane,
-	ShoppingCart,
-	Star,
-} from "lucide-react-native"
+import { ChevronRight, Star } from "lucide-react-native"
 import { useMemo } from "react"
 import { useNavigation } from "@react-navigation/native"
+import { ListIcons } from "@/constants/Icons"
 
 const IterableItem = ({
 	item,
@@ -27,16 +20,11 @@ const IterableItem = ({
 
 	const handleIcon = useMemo(() => {
 		// extract this to a separate util being used in List pills
+		const list = item as List
 		const iconColor =
-			["yellow", "green", ""].indexOf(color) > -1 ? Colors.accentColors.black : Colors.text
-		const homePillIcons = {
-			list: <ClipboardList size={24} color={iconColor} />,
-			food: <Apple size={24} color={iconColor} />,
-			shopping: <ShoppingCart size={24} color={iconColor} />,
-			travel: <Plane size={24} color={iconColor} />,
-			folder: <Folder size={24} color={iconColor} />,
-		}
-		return homePillIcons[item.icon] || <View></View>
+			color && ["yellow", "green", ""].indexOf(color) > -1 ? Colors.black : Colors.text
+		const Component = ListIcons[list.icon as keyof typeof ListIcons]
+		return Component ? <Component size={24} color={iconColor} /> : <View></View>
 	}, [item, color])
 
 	const navigate = () => {
@@ -49,12 +37,12 @@ const IterableItem = ({
 	}
 
 	const textColor = useMemo(
-		() => (["yellow", "green", ""].indexOf(color) > -1 ? Colors.accentColors.black : Colors.text),
+		() => (color && ["yellow", "green", ""].indexOf(color) > -1 ? Colors.black : Colors.text),
 		[color],
 	)
 
 	const backgroundColor = useMemo(
-		() => (color ? Colors.accentColors[color] : Colors.accentColors.grey),
+		() => (color ? Colors.accentColors[color as keyof typeof Colors.accentColors] : Colors.grey),
 		[color],
 	)
 
@@ -76,17 +64,16 @@ const IterableItem = ({
 							type="subtitle"
 							style={{
 								color: textColor,
-								fontSize: 20,
 							}}
 						>
-							{item?.priority}
+							{item.priority}
 						</ThemedText>
 					)}
 				</View>
 			</View>
 			<View style={styles.middle}>
 				<View>
-					<ThemedText type="title">{item.title}</ThemedText>
+					<ThemedText type="xl">{item.title}</ThemedText>
 				</View>
 				<View style={styles.subtitleContainer}>
 					<ThemedText type="subtitle">{item?.subtitle}</ThemedText>
@@ -94,7 +81,7 @@ const IterableItem = ({
 			</View>
 			<View style={styles.right}>
 				{item?.isFavorite && <Star size={24} color={Colors.accentColors.yellow} />}
-				<ChevronRight size={24} color={Colors.accentColors.darkGrey} />
+				<ChevronRight size={24} color={Colors.darkGrey} />
 			</View>
 		</Pressable>
 	)
@@ -103,7 +90,7 @@ const IterableItem = ({
 const styles = StyleSheet.create({
 	container: {
 		alignItems: "center",
-		backgroundColor: Colors.accentColors.black,
+		backgroundColor: Colors.black,
 		borderRadius: 10,
 		flexDirection: "row",
 		paddingHorizontal: 20,
@@ -114,7 +101,7 @@ const styles = StyleSheet.create({
 	},
 	leftSquare: {
 		alignItems: "center",
-		backgroundColor: Colors.accentColors.grey,
+		backgroundColor: Colors.grey,
 		borderRadius: 10,
 		justifyContent: "center",
 		width: 38,

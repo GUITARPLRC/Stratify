@@ -68,7 +68,9 @@ export const listItem = sqliteTable("listItem", {
 	id: text("id")
 		.primaryKey()
 		.$defaultFn(() => uuid.v4().toString()),
-	listId: text("listId").references(() => list.id),
+	listId: text("listId")
+		.notNull()
+		.references(() => list.id),
 	title: text("title"),
 	subtitle: text("subtitle"),
 	description: text("description"),

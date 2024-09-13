@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 	rowCircle: {
 		alignItems: "center",
 		justifyContent: "center",
-		backgroundColor: Colors.accentColors.black,
+		backgroundColor: Colors.black,
 		width: 50,
 		height: 50,
 		padding: 5,

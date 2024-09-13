@@ -23,10 +23,10 @@ const Pill = ({
 					backgroundColor: selected
 						? selectedColor
 							? selectedColor
-							: Colors.accentColors.black
+							: Colors.black
 						: listPill
-						? Colors.accentColors.black
-						: Colors.accentColors.grey,
+						? Colors.black
+						: Colors.grey,
 				},
 			]}
 		>

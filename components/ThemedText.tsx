@@ -2,17 +2,15 @@ import { Colors } from "@/constants/Colors"
 import { Text, type TextProps, StyleSheet } from "react-native"
 
 export type ThemedTextProps = TextProps & {
-	type?: "default" | "title" | "subtitle"
+	type?: keyof typeof styles
 }
 
-export function ThemedText({ style, type = "default", ...rest }: ThemedTextProps) {
+export function ThemedText({ style, type = "large", ...rest }: ThemedTextProps) {
 	return (
 		<Text
 			style={[
 				{ color: Colors.text, fontFamily: "Montserrat" },
-				type === "default" ? styles.default : undefined,
-				type === "title" ? styles.title : undefined,
-				type === "subtitle" ? styles.subtitle : undefined,
+				styles[type as keyof typeof styles],
 				style,
 			]}
 			{...rest}
@@ -21,16 +19,20 @@ export function ThemedText({ style, type = "default", ...rest }: ThemedTextProps
 }
 
 const styles = StyleSheet.create({
-	default: {
-		fontSize: 14,
-		lineHeight: 24,
+	xl: {
+		fontSize: 24,
 	},
-	title: {
-		fontSize: 22,
-		lineHeight: 32,
+	large: {
+		fontSize: 20,
+	},
+	medium: {
+		fontSize: 16,
+	},
+	small: {
+		fontSize: 12,
 	},
 	subtitle: {
-		fontSize: 14,
-		color: Colors.accentColors.darkGrey,
+		fontSize: 12,
+		color: Colors.darkGrey,
 	},
 })

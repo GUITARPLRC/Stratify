@@ -6,19 +6,13 @@ import Input from "@/components/Input"
 import { useState } from "react"
 import AddEditButton from "@/components/AddEditButton"
 import { Colors } from "@/constants/Colors"
-import {
-	Apple,
-	ClipboardList,
-	Folder,
-	Plane,
-	ShoppingCart,
-	Trash2 as Trash,
-} from "lucide-react-native"
+import { Trash2 as Trash } from "lucide-react-native"
 import ItemIconColorSelect from "@/components/ItemIconColorSelect"
 import { db } from "@/database"
 import * as schema from "@/database/schema"
 import { eq } from "drizzle-orm"
 import { hasAction, requestReview } from "expo-store-review"
+import { ListIcons } from "@/constants/Icons"
 
 export default function AddEditList() {
 	const { params } = useRoute()
@@ -80,40 +74,26 @@ export default function AddEditList() {
 	}
 
 	const [selectedIcon, setSelectedIcon] = useState(item?.icon || "")
-	const icons = [
-		{
-			key: "list",
-			value: <ClipboardList size={24} color={Colors.text} />,
-		},
-		{ key: "food", value: <Apple size={24} color={Colors.text} /> },
-		{ key: "shopping", value: <ShoppingCart size={24} color={Colors.text} /> },
-		{ key: "travel", value: <Plane size={24} color={Colors.text} /> },
-		{ key: "folder", value: <Folder size={24} color={Colors.text} /> },
-	]
+	const icons = Object.keys(ListIcons).map((key) => {
+		const Component = ListIcons[key as keyof typeof ListIcons]
+		return {
+			key,
+			value: <Component size={24} color={Colors.text} />,
+		}
+	})
 
 	const [selectedColor, setSelectedColor] = useState(item?.color || "")
-	const colors = [
-		{
-			key: "red",
-			value: <View style={[styles.colorCircle, { backgroundColor: Colors.accentColors.red }]} />,
-		},
-		{
-			key: "yellow",
-			value: <View style={[styles.colorCircle, { backgroundColor: Colors.accentColors.yellow }]} />,
-		},
-		{
-			key: "green",
-			value: <View style={[styles.colorCircle, { backgroundColor: Colors.accentColors.green }]} />,
-		},
-		{
-			key: "blue",
-			value: <View style={[styles.colorCircle, { backgroundColor: Colors.accentColors.blue }]} />,
-		},
-		{
-			key: "purple",
-			value: <View style={[styles.colorCircle, { backgroundColor: Colors.accentColors.purple }]} />,
-		},
-	]
+	const colors = Object.keys(Colors.accentColors).map((color) => ({
+		key: color,
+		value: (
+			<View
+				style={[
+					styles.colorCircle,
+					{ backgroundColor: Colors.accentColors[color as keyof typeof Colors.accentColors] },
+				]}
+			/>
+		),
+	}))
 
 	return (
 		<ScrollView
@@ -178,7 +158,6 @@ const styles = StyleSheet.create({
 		borderRadius: 12,
 	},
 	inputLabel: {
-		fontSize: 20,
 		marginBottom: 8,
 	},
 	inputContainer: {
@@ -190,7 +169,7 @@ const styles = StyleSheet.create({
 	rowCircle: {
 		alignItems: "center",
 		justifyContent: "center",
-		backgroundColor: Colors.accentColors.black,
+		backgroundColor: Colors.black,
 		width: 50,
 		height: 50,
 		padding: 5,

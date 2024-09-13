@@ -12,7 +12,7 @@ export default function ListIterableItem({ list, color }: { list: List; color: s
 	)
 	const item = {
 		...list,
-		subtitle: `${data.length} items`,
+		subtitle: `${data.length} item${data.length === 1 ? "" : "s"}`,
 	}
 	return (
 		<View key={list.id} style={styles.container}>

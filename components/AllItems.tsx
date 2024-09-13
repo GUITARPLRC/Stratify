@@ -6,16 +6,16 @@ import IterableItem from "./IterableItem"
 import { eq } from "drizzle-orm"
 
 const AllItems = ({ list, searchValue }: { list: schema.List; searchValue: string }) => {
-	const { data } = useLiveQuery(
+	const { data }: { data: schema.ListItem[] } = useLiveQuery(
 		db.select().from(schema.listItem).where(eq(schema.listItem.listId, list.id)),
 	)
 
 	const filteredSortedData = data
 		.filter((item) =>
 			searchValue
-				? item.title.includes(searchValue) ||
-				  item.subtitle.includes(searchValue) ||
-				  item.description.includes(searchValue) ||
+				? (item.title && item.title.includes(searchValue)) ||
+				  (item.subtitle && item.subtitle.includes(searchValue)) ||
+				  (item.description && item.description.includes(searchValue)) ||
 				  (item.priority ? item.priority.toString() : "").includes(searchValue)
 				: data,
 		)

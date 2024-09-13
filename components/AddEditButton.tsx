@@ -11,7 +11,7 @@ export default function AddEditButton({
 }) {
 	return (
 		<Pressable style={styles.button} onPress={onPress}>
-			<ThemedText style={{ fontSize: 20 }}>{type}</ThemedText>
+			<ThemedText type="xl">{type}</ThemedText>
 		</Pressable>
 	)
 }
@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
 	button: {
 		backgroundColor: Colors.primary,
 		borderRadius: 10,
-		fontSize: 24,
 		padding: 10,
 		width: "100%",
 		height: 60,

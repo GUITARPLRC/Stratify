@@ -22,8 +22,11 @@ const ListPills = ({ list }: { list: List }) => {
 	}
 
 	const selectedColor = useMemo(
-		() => (list?.color ? Colors.accentColors[list.color] : Colors.accentColors.grey),
-		[list?.color],
+		() =>
+			list?.color
+				? Colors.accentColors[list.color as keyof typeof Colors.accentColors]
+				: Colors.grey,
+		[list.color],
 	)
 
 	return (
@@ -31,19 +34,19 @@ const ListPills = ({ list }: { list: List }) => {
 			<PillList>
 				{Object.keys(listPillOptions).map((key) => {
 					const color =
-						["yellow", "green", ""].indexOf(list?.color) > -1
-							? Colors.accentColors.black
+						list.color && ["yellow", "green", ""].indexOf(list.color) > -1
+							? Colors.black
 							: Colors.text
-					const selected = listPillOptions[key] === list?.sortKey
+					const selected = listPillOptions[key as keyof typeof listPillOptions] === list?.sortKey
 					return (
 						<View key={key} style={styles.pillContainer}>
 							<Pill
 								selected={selected}
 								selectedColor={selectedColor}
-								onPress={() => updateListSort(listPillOptions[key])}
+								onPress={() => updateListSort(listPillOptions[key as keyof typeof listPillOptions])}
 								listPill
 							>
-								<ThemedText style={{ color: selected ? color : Colors.text, fontSize: 16 }}>
+								<ThemedText type="medium" style={{ color: selected ? color : Colors.text }}>
 									{/* Title Case */}
 									{key[0].toUpperCase()}
 									{key.substring(1)}

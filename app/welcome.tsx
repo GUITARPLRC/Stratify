@@ -10,15 +10,15 @@ export default function Welcome() {
 		<>
 			<View style={{ flex: 1, justifyContent: "space-between" }}>
 				<View>
-					<ThemedText type="title" style={{ marginBottom: 20 }}>
+					<ThemedText type="xl" style={{ marginBottom: 20 }}>
 						👋 Hey there!
 					</ThemedText>
-					<ThemedText type="title">Welcome to Stratify</ThemedText>
+					<ThemedText type="xl">Welcome to Stratify</ThemedText>
 					<ThemedText>Get started by pressing the add + button on the next page!</ThemedText>
 				</View>
 				<View style={styles.buttonContainer}>
 					<Pressable style={styles.button} onPress={() => navigation.navigate("index")}>
-						<ThemedText style={{ fontSize: 20 }}>Let's Go</ThemedText>
+						<ThemedText type="xl">Let's Go</ThemedText>
 					</Pressable>
 				</View>
 			</View>
@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
 	button: {
 		backgroundColor: Colors.primary,
 		borderRadius: 10,
-		fontSize: 24,
 		padding: 10,
 		width: "100%",
 		height: 60,

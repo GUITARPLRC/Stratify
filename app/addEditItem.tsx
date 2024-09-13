@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
 		marginBottom: 30,
 	},
 	inputLabel: {
-		fontSize: 20,
 		marginBottom: 8,
 	},
 	inputContainer: {

@@ -3,7 +3,7 @@ import { useRef } from "react"
 import { StyleSheet, TextInput, Pressable } from "react-native"
 
 const Input = ({ ...rest }) => {
-	const inputRef = useRef(null)
+	const inputRef = useRef<TextInput>(null)
 	return (
 		<Pressable
 			style={styles.container}
@@ -15,14 +15,14 @@ const Input = ({ ...rest }) => {
 }
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: Colors.accentColors.black,
+		backgroundColor: Colors.black,
 		borderRadius: 10,
 		paddingHorizontal: 20,
 		paddingVertical: 15,
 	},
 	input: {
 		color: Colors.text,
-		fontSize: 24,
+		fontSize: 20,
 		fontFamily: "Montserrat",
 	},
 })

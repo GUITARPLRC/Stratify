@@ -26,7 +26,6 @@ const AddButton = ({ addType, list }: { addType: "Item" | "List"; list?: List })
 const styles = StyleSheet.create({
 	button: {
 		color: "white",
-		fontSize: 50,
 		lineHeight: 50,
 		marginLeft: 1,
 	},

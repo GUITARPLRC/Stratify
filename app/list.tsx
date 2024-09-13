@@ -23,7 +23,7 @@ export default function ListView() {
 		navigation.setOptions({
 			headerRight: () => (
 				<Pressable onPress={navigateEditList}>
-					<ThemedText>Edit</ThemedText>
+					<ThemedText type="medium">Edit</ThemedText>
 				</Pressable>
 			),
 		})

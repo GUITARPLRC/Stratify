@@ -1,6 +1,5 @@
 import ListPills from "@/components/ListPills"
 import SearchInput from "@/components/SearchInput"
-import { ThemedView } from "@/components/ThemedView"
 import { List } from "@/database/schema"
 import { useRoute } from "@react-navigation/native"
 import { View, StyleSheet, Pressable, KeyboardAvoidingView } from "react-native"
@@ -39,20 +38,23 @@ export default function ListView() {
 	)
 
 	return (
-		<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={80}>
-			<ThemedView style={{ flex: 1 }}>
+		<KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={80}>
+			<View style={styles.container}>
 				<View style={styles.inputContainer}>
 					<SearchInput value={searchValue} onChange={onChangeSearchValue} />
 				</View>
 				<View>{list.length > 0 && <ListPills list={list[0]} />}</View>
 				{list.length > 0 && <AllItems list={list[0]} searchValue={searchValue} />}
 				<AddButton addType="Item" list={item} />
-			</ThemedView>
+			</View>
 		</KeyboardAvoidingView>
 	)
 }
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
 	inputContainer: {
 		marginBottom: 20,
 	},

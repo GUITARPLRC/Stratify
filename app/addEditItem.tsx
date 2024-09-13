@@ -47,6 +47,7 @@ export default function AddEditItem() {
 			subtitle: itemSubtitle,
 			description: itemDescription,
 			listId: list.id,
+			priority: priority ? Number(priority) : null,
 		})
 	}
 

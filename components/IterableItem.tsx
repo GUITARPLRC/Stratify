@@ -40,7 +40,6 @@ const IterableItem = ({ item, color }: { item: ListItem; color: string | null })
 					]}
 				>
 					<ThemedText
-						type="subtitle"
 						style={{
 							color: textColor,
 						}}

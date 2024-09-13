@@ -20,6 +20,7 @@ export default function AddEditList() {
 	const isEdit = title.includes("Edit")
 	const [itemTitle, setItemTitle] = useState(item?.title || "")
 	const navigation = useNavigation()
+
 	useFocusEffect(() => {
 		navigation.setOptions({
 			title,
@@ -45,8 +46,7 @@ export default function AddEditList() {
 		const userData = await db.select().from(schema.user)
 		if (listData.length >= 1 && !userData[0].hasSubmittedReview && (await hasAction())) {
 			requestReview()
-			await db
-				.update(schema.user)
+			db.update(schema.user)
 				.set({ hasSubmittedReview: true })
 				.where(eq(schema.user.id, userData[0].id))
 		}

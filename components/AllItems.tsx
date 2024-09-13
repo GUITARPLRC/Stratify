@@ -1,6 +1,6 @@
 import { db } from "@/database"
 import { useLiveQuery } from "drizzle-orm/expo-sqlite"
-import { View, StyleSheet, ScrollView } from "react-native"
+import { ScrollView } from "react-native"
 import * as schema from "@/database/schema"
 import IterableItem from "./IterableItem"
 import { eq } from "drizzle-orm"
@@ -30,11 +30,5 @@ const AllItems = ({ list, searchValue }: { list: schema.List; searchValue: strin
 		</ScrollView>
 	)
 }
-
-const styles = StyleSheet.create({
-	container: {
-		marginBottom: 20,
-	},
-})
 
 export default AllItems

@@ -8,10 +8,10 @@ import { ListIcons } from "@/constants/Icons"
 import { useNavigation } from "expo-router"
 import { ChevronRight, Star } from "lucide-react-native"
 import { useMemo } from "react"
-import { Colors } from "react-native/Libraries/NewAppScreen"
+import { Colors } from "@/constants/Colors"
 import { ThemedText } from "./ThemedText"
 
-export default function IterableList({ list, color }: { list: List; color: string }) {
+export default function IterableList({ list }: { list: List }) {
 	const navigation = useNavigation()
 	const { data }: { data: Schema.List[] } = useLiveQuery(
 		db.select().from(Schema.list).where(eq(Schema.list.id, list.id)),
@@ -22,19 +22,23 @@ export default function IterableList({ list, color }: { list: List; color: strin
 	const item = data[0]
 
 	const textColor = useMemo(
-		() => (color && ["yellow", "green", ""].indexOf(color) > -1 ? Colors.black : Colors.text),
-		[color],
+		() =>
+			list.color && ["yellow", "green", ""].indexOf(list.color) > -1 ? Colors.black : Colors.text,
+		[list.color],
 	)
 
 	const backgroundColor = useMemo(
-		() => (color ? Colors.accentColors[color as keyof typeof Colors.accentColors] : Colors.grey),
-		[color],
+		() =>
+			list.color
+				? Colors.accentColors[list.color as keyof typeof Colors.accentColors]
+				: Colors.grey,
+		[list.color],
 	)
 
 	const handleIcon = useMemo(() => {
 		const Component = ListIcons[list.icon as keyof typeof ListIcons]
 		return Component ? <Component size={24} color={textColor} /> : <View></View>
-	}, [item, color])
+	}, [item, textColor])
 
 	const navigate = () => {
 		// @ts-expect-error
@@ -57,7 +61,7 @@ export default function IterableList({ list, color }: { list: List; color: strin
 			</View>
 			<View style={styles.middle}>
 				<View>
-					<ThemedText type="xl">{item.title}</ThemedText>
+					<ThemedText type="xl">{item?.title || ""}</ThemedText>
 				</View>
 				<View style={styles.subtitleContainer}>
 					<ThemedText type="subtitle">{`${listItems.length} item${
@@ -66,7 +70,7 @@ export default function IterableList({ list, color }: { list: List; color: strin
 				</View>
 			</View>
 			<View style={styles.right}>
-				{item.isFavorite && <Star size={24} color={Colors.accentColors.yellow} />}
+				{item?.isFavorite && <Star size={24} color={Colors.accentColors.yellow} />}
 				<ChevronRight size={24} color={Colors.darkGrey} />
 			</View>
 		</Pressable>

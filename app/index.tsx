@@ -30,8 +30,8 @@ export default function Index() {
 	}, [])
 
 	return (
-		<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={80}>
-			<ThemedView style={{ flex: 1 }}>
+		<KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={80}>
+			<ThemedView style={styles.container}>
 				<View style={styles.inputContainer}>
 					<SearchInput value={value} onChange={onValueChange} />
 				</View>
@@ -43,6 +43,9 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
 	inputContainer: {
 		marginBottom: 20,
 	},

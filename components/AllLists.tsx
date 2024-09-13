@@ -15,10 +15,11 @@ const AllLists = ({ searchValue }: { searchValue: string }) => {
 				: data,
 		[data, searchValue],
 	)
+
 	return (
 		<ScrollView>
 			{filteredData.map((list: List) => (
-				<IterableList key={list.id} list={list} color={list.color || ""} />
+				<IterableList key={list.id} list={list} />
 			))}
 		</ScrollView>
 	)

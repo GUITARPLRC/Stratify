@@ -42,7 +42,7 @@ export default function RootLayout() {
 			{/* Add drizzle studio plugin */}
 			{__DEV__ && <DrizzleStudio />}
 
-			{/* light color status for time, wifi, battery */}
+			{/* light TEXT color status for time, wifi, battery */}
 			<StatusBar style="light" />
 
 			<SQLiteProvider>

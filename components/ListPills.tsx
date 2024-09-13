@@ -34,9 +34,8 @@ const ListPills = ({ list }: { list: List }) => {
 			<PillList>
 				{Object.keys(listPillOptions).map((key) => {
 					const color =
-						list.color && ["yellow", "green", ""].indexOf(list.color) > -1
-							? Colors.black
-							: Colors.text
+						// @ts-expect-error
+						["yellow", "green", ""].indexOf(list.color) > -1 ? Colors.black : Colors.text
 					const selected = listPillOptions[key as keyof typeof listPillOptions] === list?.sortKey
 					return (
 						<View key={key} style={styles.pillContainer}>

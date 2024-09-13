@@ -32,6 +32,7 @@ export type ListItem = {
 	createdAt: string
 }
 
+// Table definitions
 export const user = sqliteTable("user", {
 	id: text("id")
 		.primaryKey()

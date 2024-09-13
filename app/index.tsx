@@ -22,6 +22,7 @@ export default function Index() {
 					fetch(
 						`https://chu-sendemailwithargs.web.val.run/?subject=🎉Stratify: New User 🌲&body=${data[0].id}`,
 					)
+				// @ts-expect-error
 				navigation.navigate("welcome")
 			}
 		}

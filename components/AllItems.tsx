@@ -19,14 +19,13 @@ const AllItems = ({ list, searchValue }: { list: schema.List; searchValue: strin
 				  (item.priority ? item.priority.toString() : "").includes(searchValue)
 				: data,
 		)
+		// @ts-expect-error
 		.sort((a, b) => (a[list.sortKey] > b[list.sortKey] ? 1 : -1))
 
 	return (
 		<ScrollView>
 			{filteredSortedData.map((item) => (
-				<View key={item.id} style={styles.container}>
-					<IterableItem itemType="item" color={list.color} item={item} {...item} />
-				</View>
+				<IterableItem key={item.id} color={list.color} item={item} {...item} />
 			))}
 		</ScrollView>
 	)

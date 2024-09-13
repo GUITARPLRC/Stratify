@@ -6,18 +6,24 @@ import ConfettiCannon from "react-native-confetti-cannon"
 
 export default function Welcome() {
 	const navigation = useNavigation()
+	// @ts-expect-error
+	const navigate = () => navigation.navigate("index")
 	return (
 		<>
-			<View style={{ flex: 1, justifyContent: "space-between" }}>
+			<View style={styles.container}>
 				<View>
-					<ThemedText type="xl" style={{ marginBottom: 20 }}>
+					<ThemedText type="xl" style={styles.spacing}>
 						👋 Hey there!
 					</ThemedText>
-					<ThemedText type="xl">Welcome to Stratify</ThemedText>
-					<ThemedText>Get started by pressing the add + button on the next page!</ThemedText>
+					<ThemedText type="xl" style={styles.spacing}>
+						Welcome to Stratify
+					</ThemedText>
+					<ThemedText type="medium">
+						Get started by pressing the add + button on the next page!
+					</ThemedText>
 				</View>
 				<View style={styles.buttonContainer}>
-					<Pressable style={styles.button} onPress={() => navigation.navigate("index")}>
+					<Pressable style={styles.button} onPress={navigate}>
 						<ThemedText type="xl">Let's Go</ThemedText>
 					</Pressable>
 				</View>
@@ -41,5 +47,12 @@ const styles = StyleSheet.create({
 		height: 60,
 		justifyContent: "center",
 		alignItems: "center",
+	},
+	container: {
+		flex: 1,
+		justifyContent: "space-between",
+	},
+	spacing: {
+		marginBottom: 20,
 	},
 })

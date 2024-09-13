@@ -3,7 +3,7 @@ import { useLiveQuery } from "drizzle-orm/expo-sqlite"
 import { ScrollView } from "react-native"
 import * as Schema from "@/database/schema"
 import { List } from "@/database/schema"
-import ListIterableItem from "./ListIterableItem"
+import IterableList from "./IterableList"
 import { useMemo } from "react"
 
 const AllLists = ({ searchValue }: { searchValue: string }) => {
@@ -18,7 +18,7 @@ const AllLists = ({ searchValue }: { searchValue: string }) => {
 	return (
 		<ScrollView>
 			{filteredData.map((list: List) => (
-				<ListIterableItem key={list.id} list={list} color={list.color || ""} />
+				<IterableList key={list.id} list={list} color={list.color || ""} />
 			))}
 		</ScrollView>
 	)

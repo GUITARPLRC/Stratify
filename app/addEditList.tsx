@@ -28,6 +28,7 @@ export default function AddEditList() {
 					<Pressable
 						onPress={async () => {
 							await deleteList()
+							// @ts-expect-error
 							navigation.navigate("index")
 						}}
 					>

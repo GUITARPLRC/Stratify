@@ -1,7 +1,5 @@
 import { View, StyleSheet } from "react-native"
-import Pill from "./Pill"
 import PillList from "./PillList"
-import { ThemedText } from "./ThemedText"
 import { Apple, ClipboardList, Folder, Plane, ShoppingCart, Star } from "lucide-react-native"
 
 // * WIP 🚧
@@ -37,13 +35,13 @@ const HomePills = () => {
 			<PillList>
 				{Object.keys(homePillOptions).map((key) => (
 					<View key={key} style={styles.pillContainer}>
-						<Pill selected={homePillOptions[key] === "all"}>
+						{/* <Pill selected={homePillOptions[key] === "all"}>
 							{homePillOptions[key] === "all" ? (
 								<ThemedText type="medium">All</ThemedText>
 							) : (
 								homePillIcons[homePillOptions[key]]
 							)}
-						</Pill>
+						</Pill> */}
 					</View>
 				))}
 			</PillList>

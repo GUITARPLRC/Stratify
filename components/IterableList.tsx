@@ -1,22 +1,25 @@
+import { db } from "@/database"
+import { List } from "@/database/schema"
 import { View, StyleSheet, Pressable } from "react-native"
-import { List, ListItem } from "@/database/schema"
-import { Colors } from "@/constants/Colors"
-import { ThemedText } from "./ThemedText"
+import { useLiveQuery } from "drizzle-orm/expo-sqlite"
+import { eq } from "drizzle-orm"
+import * as Schema from "@/database/schema"
+import { ListIcons } from "@/constants/Icons"
+import { useNavigation } from "expo-router"
 import { ChevronRight, Star } from "lucide-react-native"
 import { useMemo } from "react"
-import { useNavigation } from "@react-navigation/native"
-import { ListIcons } from "@/constants/Icons"
+import { Colors } from "react-native/Libraries/NewAppScreen"
+import { ThemedText } from "./ThemedText"
 
-const IterableItem = ({ item, color }: { item: ListItem; color: string | null }) => {
+export default function IterableList({ list, color }: { list: List; color: string }) {
 	const navigation = useNavigation()
-
-	const navigate = () => {
-		// @ts-expect-error
-		navigation.navigate("addEditItem", {
-			title: `Edit Item`,
-			item: item,
-		})
-	}
+	const { data }: { data: Schema.List[] } = useLiveQuery(
+		db.select().from(Schema.list).where(eq(Schema.list.id, list.id)),
+	)
+	const { data: listItems }: { data: Schema.ListItem[] } = useLiveQuery(
+		db.select().from(Schema.listItem).where(eq(Schema.listItem.listId, list.id)),
+	)
+	const item = data[0]
 
 	const textColor = useMemo(
 		() => (color && ["yellow", "green", ""].indexOf(color) > -1 ? Colors.black : Colors.text),
@@ -27,6 +30,16 @@ const IterableItem = ({ item, color }: { item: ListItem; color: string | null })
 		() => (color ? Colors.accentColors[color as keyof typeof Colors.accentColors] : Colors.grey),
 		[color],
 	)
+
+	const handleIcon = useMemo(() => {
+		const Component = ListIcons[list.icon as keyof typeof ListIcons]
+		return Component ? <Component size={24} color={textColor} /> : <View></View>
+	}, [item, color])
+
+	const navigate = () => {
+		// @ts-expect-error
+		navigation.navigate("list", { item: item })
+	}
 
 	return (
 		<Pressable style={styles.container} onPress={navigate}>
@@ -39,14 +52,7 @@ const IterableItem = ({ item, color }: { item: ListItem; color: string | null })
 						},
 					]}
 				>
-					<ThemedText
-						type="subtitle"
-						style={{
-							color: textColor,
-						}}
-					>
-						{item.priority}
-					</ThemedText>
+					{handleIcon}
 				</View>
 			</View>
 			<View style={styles.middle}>
@@ -54,10 +60,13 @@ const IterableItem = ({ item, color }: { item: ListItem; color: string | null })
 					<ThemedText type="xl">{item.title}</ThemedText>
 				</View>
 				<View style={styles.subtitleContainer}>
-					<ThemedText type="subtitle">{item.subtitle}</ThemedText>
+					<ThemedText type="subtitle">{`${listItems.length} item${
+						listItems.length === 1 ? "" : "s"
+					}`}</ThemedText>
 				</View>
 			</View>
 			<View style={styles.right}>
+				{item.isFavorite && <Star size={24} color={Colors.accentColors.yellow} />}
 				<ChevronRight size={24} color={Colors.darkGrey} />
 			</View>
 		</Pressable>
@@ -66,13 +75,7 @@ const IterableItem = ({ item, color }: { item: ListItem; color: string | null })
 
 const styles = StyleSheet.create({
 	container: {
-		alignItems: "center",
-		backgroundColor: Colors.black,
-		borderRadius: 10,
-		flexDirection: "row",
 		marginBottom: 20,
-		paddingHorizontal: 20,
-		paddingVertical: 10,
 	},
 	left: {
 		marginRight: 15,
@@ -98,5 +101,3 @@ const styles = StyleSheet.create({
 		marginLeft: 3,
 	},
 })
-
-export default IterableItem

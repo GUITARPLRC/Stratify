@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		position: "absolute",
-		bottom: 20,
-		right: 0,
+		bottom: 30,
+		right: 10,
 		zIndex: 10000,
 	},
 })

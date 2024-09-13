@@ -1,6 +1,5 @@
-import { KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, View } from "react-native"
+import { Pressable, ScrollView, StyleSheet, View } from "react-native"
 import { ThemedText } from "@/components/ThemedText"
-import { ThemedView } from "@/components/ThemedView"
 import { useRoute } from "@react-navigation/native"
 import { useFocusEffect, useNavigation } from "expo-router"
 import Input from "@/components/Input"
@@ -117,59 +116,54 @@ export default function AddEditList() {
 	]
 
 	return (
-		<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={80}>
-			<ScrollView contentContainerStyle={{ flex: 1 }}>
-				<ThemedView
-					style={{
-						flex: 1,
-					}}
-				>
-					<View style={{ flex: 1 }}>
-						<View>
-							<ThemedText style={styles.inputLabel}>Title</ThemedText>
-							<View style={styles.inputContainer}>
-								<Input value={itemTitle} onChangeText={setItemTitle} />
-							</View>
-						</View>
-						<View style={styles.inputContainer}>
-							<ThemedText style={styles.inputLabel}>Icon</ThemedText>
-							<View style={styles.rowContainer}>
-								<ItemIconColorSelect
-									items={icons}
-									onPress={setSelectedIcon}
-									selectedKey={selectedIcon}
-								/>
-							</View>
-						</View>
-						<View style={styles.inputContainer}>
-							<ThemedText style={styles.inputLabel}>Color</ThemedText>
-							<View style={styles.rowContainer}>
-								<ItemIconColorSelect
-									items={colors}
-									onPress={setSelectedColor}
-									selectedKey={selectedColor}
-								/>
-							</View>
-						</View>
-					</View>
-					<View style={styles.buttonContainer}>
-						<AddEditButton
-							type={isEdit ? "Update" : "Create"}
-							onPress={async () => {
-								if (isEdit) {
-									// edit / update
-									await editList()
-								} else {
-									// create
-									await createList()
-								}
-								navigation.goBack()
-							}}
+		<ScrollView
+			// * 2 cool features of ScrollView
+			showsVerticalScrollIndicator={false}
+			automaticallyAdjustKeyboardInsets={true}
+			contentContainerStyle={{ flex: 1, justifyContent: "space-between" }}
+		>
+			<View>
+				<ThemedText style={styles.inputLabel}>Title</ThemedText>
+				<View style={styles.inputContainer}>
+					<Input value={itemTitle} onChangeText={setItemTitle} />
+				</View>
+				<View style={styles.inputContainer}>
+					<ThemedText style={styles.inputLabel}>Icon</ThemedText>
+					<View style={styles.rowContainer}>
+						<ItemIconColorSelect
+							items={icons}
+							onPress={setSelectedIcon}
+							selectedKey={selectedIcon}
 						/>
 					</View>
-				</ThemedView>
-			</ScrollView>
-		</KeyboardAvoidingView>
+				</View>
+				<View style={styles.inputContainer}>
+					<ThemedText style={styles.inputLabel}>Color</ThemedText>
+					<View style={styles.rowContainer}>
+						<ItemIconColorSelect
+							items={colors}
+							onPress={setSelectedColor}
+							selectedKey={selectedColor}
+						/>
+					</View>
+				</View>
+			</View>
+			<View style={styles.buttonContainer}>
+				<AddEditButton
+					type={isEdit ? "Update" : "Create"}
+					onPress={async () => {
+						if (isEdit) {
+							// edit / update
+							await editList()
+						} else {
+							// create
+							await createList()
+						}
+						navigation.goBack()
+					}}
+				/>
+			</View>
+		</ScrollView>
 	)
 }
 

@@ -1,6 +1,5 @@
-import { KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, View } from "react-native"
+import { Pressable, ScrollView, StyleSheet, View } from "react-native"
 import { ThemedText } from "@/components/ThemedText"
-import { ThemedView } from "@/components/ThemedView"
 import { useRoute } from "@react-navigation/native"
 import { useFocusEffect, useNavigation } from "expo-router"
 import Input from "@/components/Input"
@@ -70,65 +69,57 @@ export default function AddEditItem() {
 	const [priority, setPriority] = useState(item?.priority || 0)
 
 	return (
-		<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={80}>
-			<ScrollView>
-				<ThemedView
-					style={{
-						flex: 1,
+		<ScrollView
+			showsVerticalScrollIndicator={false}
+			automaticallyAdjustKeyboardInsets={true}
+			contentContainerStyle={{ flex: 1, justifyContent: "space-between" }}
+		>
+			<View>
+				<View>
+					<ThemedText style={styles.inputLabel}>Title</ThemedText>
+					<View style={styles.inputContainer}>
+						<Input value={itemTitle} onChangeText={setItemTitle} />
+					</View>
+				</View>
+				<View>
+					<ThemedText style={styles.inputLabel}>Subtitle</ThemedText>
+					<View style={styles.inputContainer}>
+						<Input value={itemSubtitle} onChangeText={setItemSubtitle} />
+					</View>
+				</View>
+				<View>
+					<ThemedText style={styles.inputLabel}>Description</ThemedText>
+					<View style={styles.inputContainer}>
+						<Input value={itemDescription} onChangeText={setItemDescription} />
+					</View>
+				</View>
+				<View>
+					<ThemedText style={[styles.inputLabel, { marginBottom: -30 }]}>Priority</ThemedText>
+					<View style={[styles.inputContainer, { alignItems: "center" }]}>
+						<Picker selectedValue={priority} onValueChange={setPriority} style={{ width: "100%" }}>
+							{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
+								<Picker.Item key={item} label={item.toString()} value={item} color="#fff" />
+							))}
+						</Picker>
+					</View>
+				</View>
+			</View>
+			<View style={styles.buttonContainer}>
+				<AddEditButton
+					type={title.includes("Edit") ? "Update" : "Create"}
+					onPress={async () => {
+						if (title.includes("Edit")) {
+							// edit / update
+							await editItem()
+						} else {
+							// create
+							await createItem()
+						}
+						navigation.goBack()
 					}}
-				>
-					<View>
-						<View>
-							<ThemedText style={styles.inputLabel}>Title</ThemedText>
-							<View style={styles.inputContainer}>
-								<Input value={itemTitle} onChangeText={setItemTitle} />
-							</View>
-						</View>
-						<View>
-							<ThemedText style={styles.inputLabel}>Subtitle</ThemedText>
-							<View style={styles.inputContainer}>
-								<Input value={itemSubtitle} onChangeText={setItemSubtitle} />
-							</View>
-						</View>
-						<View>
-							<ThemedText style={styles.inputLabel}>Description</ThemedText>
-							<View style={styles.inputContainer}>
-								<Input value={itemDescription} onChangeText={setItemDescription} />
-							</View>
-						</View>
-						<View>
-							<ThemedText style={[styles.inputLabel, { marginBottom: -30 }]}>Priority</ThemedText>
-							<View style={[styles.inputContainer, { alignItems: "center" }]}>
-								<Picker
-									selectedValue={priority}
-									onValueChange={setPriority}
-									style={{ width: "100%" }}
-								>
-									{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-										<Picker.Item key={item} label={item.toString()} value={item} color="#fff" />
-									))}
-								</Picker>
-							</View>
-						</View>
-					</View>
-					<View style={styles.buttonContainer}>
-						<AddEditButton
-							type={title.includes("Edit") ? "Update" : "Create"}
-							onPress={async () => {
-								if (title.includes("Edit")) {
-									// edit / update
-									await editItem()
-								} else {
-									// create
-									await createItem()
-								}
-								navigation.goBack()
-							}}
-						/>
-					</View>
-				</ThemedView>
-			</ScrollView>
-		</KeyboardAvoidingView>
+				/>
+			</View>
+		</ScrollView>
 	)
 }
 

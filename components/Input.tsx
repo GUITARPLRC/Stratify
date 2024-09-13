@@ -1,11 +1,16 @@
 import { Colors } from "@/constants/Colors"
-import { View, StyleSheet, TextInput } from "react-native"
+import { useRef } from "react"
+import { StyleSheet, TextInput, Pressable } from "react-native"
 
 const Input = ({ ...rest }) => {
+	const inputRef = useRef(null)
 	return (
-		<View style={styles.container}>
-			<TextInput style={styles.input} {...rest} />
-		</View>
+		<Pressable
+			style={styles.container}
+			onPress={() => inputRef.current && inputRef.current.focus()}
+		>
+			<TextInput ref={inputRef} style={styles.input} {...rest} />
+		</Pressable>
 	)
 }
 const styles = StyleSheet.create({

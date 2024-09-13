@@ -79,7 +79,13 @@ export default function IterableList({ list }: { list: List }) {
 
 const styles = StyleSheet.create({
 	container: {
+		alignItems: "center",
+		backgroundColor: Colors.black,
+		borderRadius: 10,
+		flexDirection: "row",
 		marginBottom: 20,
+		paddingHorizontal: 20,
+		paddingVertical: 10,
 	},
 	left: {
 		marginRight: 15,

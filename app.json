@@ -1,7 +1,7 @@
 {
 	"expo": {
 		"name": "Stratify",
-		"slug": "Stratify",
+		"slug": "stratify",
 		"version": "1.0.0",
 		"orientation": "portrait",
 		"icon": "./assets/images/icon.png",
@@ -10,25 +10,28 @@
 		"splash": {
 			"image": "./assets/images/splash.png",
 			"resizeMode": "contain",
-			"backgroundColor": "#ffffff"
+			"backgroundColor": "#303030"
 		},
 		"ios": {
-			"supportsTablet": true
+			"supportsTablet": true,
+			"bundleIdentifier": "com.reynolds.stratify"
 		},
 		"android": {
 			"adaptiveIcon": {
-				"foregroundImage": "./assets/images/adaptive-icon.png",
-				"backgroundColor": "#ffffff"
-			}
-		},
-		"web": {
-			"bundler": "metro",
-			"output": "static",
-			"favicon": "./assets/images/favicon.png"
+				"foregroundImage": "./assets/images/splash.png",
+				"backgroundColor": "#303030"
+			},
+			"package": "com.reynolds.stratify"
 		},
 		"plugins": ["expo-router"],
 		"experiments": {
 			"typedRoutes": true
-		}
+		},
+		"extra": {
+			"eas": {
+				"projectId": "14a6a9fd-7a29-43d8-a710-a48e1d32b832"
+			}
+		},
+		"owner": "chuckreynoldsdev"
 	}
 }

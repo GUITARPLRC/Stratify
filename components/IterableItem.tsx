@@ -1,19 +1,17 @@
 import { View, StyleSheet, Pressable } from "react-native"
-import { List, ListItem } from "@/database/schema"
+import { ListItem } from "@/database/schema"
 import { Colors } from "@/constants/Colors"
 import { ThemedText } from "./ThemedText"
-import { ChevronRight, Star } from "lucide-react-native"
+import { ChevronRight } from "lucide-react-native"
 import { useMemo } from "react"
 import { useNavigation } from "@react-navigation/native"
-import { ListIcons } from "@/constants/Icons"
 
 const IterableItem = ({ item, color }: { item: ListItem; color: string | null }) => {
 	const navigation = useNavigation()
 
 	const navigate = () => {
 		// @ts-expect-error
-		navigation.navigate("addEditItem", {
-			title: `Edit Item`,
+		navigation.navigate("editItem", {
 			item: item,
 		})
 	}

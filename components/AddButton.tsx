@@ -9,7 +9,7 @@ const AddButton = ({ addType, list }: { addType: "Item" | "List"; list?: List })
 
 	const handleOnPress = () =>
 		// @ts-expect-error
-		navigation.navigate(list ? "addEditItem" : "addEditList", {
+		navigation.navigate(list ? "addItem" : "addEditList", {
 			title: `Add ${addType}`,
 			list: list,
 		})

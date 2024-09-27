@@ -92,7 +92,8 @@ export default function RootLayout() {
 							}}
 						/>
 						<Stack.Screen name="addEditList" />
-						<Stack.Screen name="addEditItem" />
+						<Stack.Screen name="editItem" options={{ title: "Edit Item" }} />
+						<Stack.Screen name="addItem" options={{ title: "Add Item" }} />
 					</Stack>
 				</QueryClientProvider>
 			</SQLiteProvider>
